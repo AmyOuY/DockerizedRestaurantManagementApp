@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "SearchOrderByTable";
+}
+
+<h1 class="text-center">Search Order By Table Number</h1>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="row mt-lg-5"></div>
+            <div class="row mt-lg-5"></div>
+            <form asp-action="ViewOrderDetailsByTableNumber">
+                <div class="form-group">
+                    <label for="tableNumber" class="h5">Table number: </label>
+                    <input id="tableNumber" name="tableNumber" />
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="View Order Summary" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>

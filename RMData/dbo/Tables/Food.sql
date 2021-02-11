@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Food]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [TypeId] INT NOT NULL, 
+    [FoodName] NVARCHAR(50) NOT NULL, 
+    [Price] MONEY NOT NULL, 
+    CONSTRAINT [FK_Food_ToFoodType] FOREIGN KEY (TypeId) REFERENCES FoodType(Id)
+)
