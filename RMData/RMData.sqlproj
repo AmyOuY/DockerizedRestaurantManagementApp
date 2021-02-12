@@ -102,6 +102,14 @@
     <Build Include="dbo\StoredProcedures\spDiningTable_GetByTableNumber.sql" />
     <Build Include="dbo\StoredProcedures\spPerson_GetByFullName.sql" />
     <Build Include="dbo\StoredProcedures\spFood_GetByName.sql" />
+    <Build Include="dbo\Tables\Bill.sql" />
+    <Build Include="dbo\StoredProcedures\spBill_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spOrder_UpdateBillPaid.sql" />
+    <Build Include="dbo\StoredProcedures\spOrderDetail_UpdateBillPaid.sql" />
+    <Build Include="dbo\StoredProcedures\spOrder_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spOrderDetail_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spOrder_GetByDiningTableIdUnpaid.sql" />
+    <Build Include="dbo\StoredProcedures\spBill_GetAllPaid.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PublishLocation\RMData.publish.xml" />

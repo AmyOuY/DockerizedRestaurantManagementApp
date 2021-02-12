@@ -12,9 +12,12 @@ namespace RMDataLibrary.DataAccess
         Task<OrderModel> GetOrderById(int id);
         Task<List<OrderDetailModel>> GetOrderDetailsByDiningTableIdUnpaid(int tableId);
         Task<OrderDetailModel> GetOrderDetailById(int id);
+        Task<OrderModel> GetUnpaidOrderByDiningTableId(int id);
         Task InsertOrderByTableId(int tableId);
         Task InsertOrderDetail(OrderDetailModel detail);
         Task UpdateOrder(OrderModel order);
         Task UpdateOrderDetail(OrderDetailModel detail);
+        Task<List<OrderDetailModel>> GetAllOrderDetails();
+        Task<List<OrderModel>> GetAllOrders();
     }
 }

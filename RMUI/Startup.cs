@@ -40,6 +40,7 @@ namespace RMUI
             services.AddTransient<IFoodData, FoodData>();
             services.AddTransient<IDiningTableData, DiningTableData>();
             services.AddTransient<IOrderData, OrderData>();
+            services.AddTransient<IBillData, BillData>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

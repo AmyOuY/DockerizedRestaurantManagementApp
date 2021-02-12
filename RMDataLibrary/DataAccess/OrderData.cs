@@ -117,6 +117,14 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        public async Task<OrderModel> GetUnpaidOrderByDiningTableId(int id)
+        {
+            var results = await _sql.LoadData<OrderModel, dynamic>("spOrder_GetByDiningTableIdUnpaid", new { DiningTableId = id });
+
+            return results.FirstOrDefault();
+        }
+
+
         public async Task UpdateOrder(OrderModel order)
         {
             await _sql.SaveData("spOrder_Update", order);
@@ -126,6 +134,22 @@ namespace RMDataLibrary.DataAccess
         public async Task DeleteOrder(int id)
         {
             await _sql.DeleteData("spOrder_Delete", new { id });
+        }
+
+
+        public async Task<List<OrderDetailModel>> GetAllOrderDetails()
+        {
+            var results = await _sql.LoadData<OrderDetailModel, dynamic>("spOrderDetail_GetAll", new { });
+
+            return results;
+        }
+
+
+        public async Task<List<OrderModel>> GetAllOrders()
+        {
+            var results = await _sql.LoadData<OrderModel, dynamic>("spOrder_GetAll", new { });
+
+            return results;
         }
     }
 }

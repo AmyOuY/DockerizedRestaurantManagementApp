@@ -61,6 +61,22 @@
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="Order" asp-action="SearchOrderByTable">Search Order</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bills</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Bill" asp-action="SearchBill">Search Bill</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Bill" asp-action="ViewAllPaidBills">View all paid Bills</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Repository</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Repository" asp-action="ViewAllOrders">View All Orders</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Repository" asp-action="ViewAllOrderDetails">View All Order Details</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

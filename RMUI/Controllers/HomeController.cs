@@ -33,5 +33,15 @@ namespace RMUI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        public IActionResult Alert(string message)
+        {
+            MessageDisplayModel displayMessage = new MessageDisplayModel { 
+                Text = message
+            };
+
+            return View(displayMessage);
+        }
     }
 }

@@ -151,18 +151,16 @@ namespace RMUI.Controllers
         {
             if (await _diningTable.IsValidTableNumber(tableNumber) == false)
             {
-                return RedirectToAction("TableNotExistError", "Home");
+                return RedirectToAction("Alert", "Home", new { message = $"Error! Table Number {tableNumber} does not exist!" });
             }
 
             DiningTableModel table = await _diningTable.GetDiningTableByTableNumber(tableNumber);
-
-            Console.WriteLine($"the table Id is table.Id");
 
             List<OrderDetailModel> orderDetails = await _order.GetOrderDetailsByDiningTableIdUnpaid(table.Id);
 
             if (orderDetails.Count == 0)
             {
-                return RedirectToAction("NoOrderError", "Home");
+                return RedirectToAction("Alert", "Home", new { message = $"Error! There is no currently active order for Table {tableNumber}!" });
             }
             else
             {
@@ -198,7 +196,7 @@ namespace RMUI.Controllers
         {
             if (await _diningTable.IsValidTableNumber(tableNumber) == false)
             {
-                return RedirectToAction("TableNotExistError", "Home");
+                return RedirectToAction("Alert", "Home", new { message = $"Error! Table Number {tableNumber} does not exist!" });
             }
 
             List<OrderModel> allOrders = await _order.GetAllUnpaidOrders();
@@ -214,7 +212,7 @@ namespace RMUI.Controllers
 
             await _order.InsertOrderByTableId(table.Id);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Alert", "Home", new { message = $"Successfully Submit Order for Table Number {tableNumber}!" });
         }
 
 
@@ -361,7 +359,7 @@ namespace RMUI.Controllers
             
             if (orderDetails.Count == 0)
             {
-                return RedirectToAction("NoOrderError", "Home");
+                return RedirectToAction("Alert", "Home", new { message = $"Error! There is no currently active order for Table {table.TableNumber}!" });
             }
             else
             {
