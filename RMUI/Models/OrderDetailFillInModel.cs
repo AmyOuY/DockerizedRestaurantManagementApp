@@ -9,7 +9,7 @@ namespace RMUI.Models
     public class OrderDetailFillInModel
     {
         [Required]
-        [Display(Name = "Dining Table Number")]
+        [Display(Name = "Table Number")]
         public int DiningTableId { get; set; }
 
         [Required]
@@ -27,7 +27,7 @@ namespace RMUI.Models
         [Required]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = "You need to enter a valid Quantity")]
+        [Required]
         public int Quantity { get; set; }
     }
 }

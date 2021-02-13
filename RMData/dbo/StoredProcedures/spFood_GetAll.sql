@@ -2,6 +2,7 @@
 	
 AS
 	select Id, TypeId, FoodName, Price
-	from dbo.Food;
+	from dbo.Food
+	order by TypeId;
 
 RETURN 0
