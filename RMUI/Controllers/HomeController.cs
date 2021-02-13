@@ -35,6 +35,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Show Alert message
         public IActionResult Alert(string message)
         {
             MessageDisplayModel displayMessage = new MessageDisplayModel { 

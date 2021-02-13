@@ -26,8 +26,14 @@ namespace RMUI.Controllers
         }
 
 
+        // Insert new Dining Table into database
         public async Task<IActionResult> InsertDiningTable(DiningTableDisplayModel table)
         {
+            if (await _data.IsValidTableNumber(table.TableNumber) == true)
+            {
+                return RedirectToAction("Alert", "Home", new { message = $"Error! Table Number {table.TableNumber} already exists!" });
+            }
+
             if (ModelState.IsValid)
             {
                 DiningTableModel newTable = new DiningTableModel {
@@ -44,6 +50,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View all Dining Tables as a list
         public async Task<IActionResult> ViewAllDiningTables()
         {
             var displayTables = new List<DiningTableDisplayModel>();
@@ -62,6 +69,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Edit Dining Table with Id = id
         public async Task<IActionResult> EditDiningTable(int id)
         {
             DiningTableModel foundTable = await _data.GetDiningTableById(id);
@@ -76,8 +84,14 @@ namespace RMUI.Controllers
         }
 
 
+        // Update Dining Table info
         public async Task<IActionResult> UpdateDiningTable(DiningTableDisplayModel table)
         {
+            if (await _data.IsValidTableNumber(table.TableNumber) == true)
+            {
+                return RedirectToAction("Alert", "Home", new { message = $"Error! Table Number {table.TableNumber} already exists!" });
+            }
+
             if (ModelState.IsValid)
             {
                 var updateTable = new DiningTableModel { 
@@ -95,6 +109,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete Dining Table with Id = id
         public async Task<IActionResult> DeleteDiningTable(int id)
         {
             await _data.DeleteDiningTable(id);

@@ -17,12 +17,14 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Insert new DiningTable into database
         public async Task InsertDiningTable(DiningTableModel table)
         {
             await _sql.SaveData("spDiningTable_Insert", table);
         }
 
 
+        // Get all DiningTables info from database
         public async Task<List<DiningTableModel>> GetAllDiningTables()
         {
             var results = await _sql.LoadData<DiningTableModel, dynamic>("spDiningTable_GetAll", new { });
@@ -31,6 +33,7 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Get specific DiningTable info with Id = id
         public async Task<DiningTableModel> GetDiningTableById(int id)
         {
             var results = await _sql.LoadData<DiningTableModel, dynamic>("spDiningTable_GetById", new { id });
@@ -39,6 +42,7 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Get specific DiningTable info with TableNumber = tableNumber
         public async Task<DiningTableModel> GetDiningTableByTableNumber(int tableNumber)
         {
             var results = await _sql.LoadData<DiningTableModel, dynamic>("spDiningTable_GetByTableNumber", new { tableNumber });
@@ -47,18 +51,21 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Update DiningTable info in database
         public async Task UpdateDiningTable(DiningTableModel table)
         {
             await _sql.SaveData("spDiningTable_Update", table);
         }
 
 
+        // Delete specific DiningTable from database with Id = id 
         public async Task DeleteDiningTable(int id)
         {
             await _sql.DeleteData("spDiningTable_Delete", new { id });
         }
 
 
+        // Check whether the input tableNumber exists in the database
         public async Task<bool> IsValidTableNumber(int tableNumber)
         {
             var allDiningTables = await _sql.LoadData<DiningTableModel, dynamic>("spDiningTable_GetAll", new { });

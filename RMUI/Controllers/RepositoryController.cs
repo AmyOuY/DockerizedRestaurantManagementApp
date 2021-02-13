@@ -31,6 +31,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View all order details in the database
         public async Task<IActionResult> ViewAllOrderDetails()
         {
             List<OrderDetailModel> orderDetails = await _order.GetAllOrderDetails();
@@ -58,6 +59,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View all orders in the database
         public async Task<IActionResult> ViewAllOrders()
         {
             List<OrderModel> orders = await _order.GetAllOrders();

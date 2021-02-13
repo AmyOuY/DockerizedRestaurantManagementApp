@@ -16,6 +16,8 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Press Pay Bill Button will insert bill info into database and update 
+        // correspoding BillPaid info in Order and OrderDetail tables
         public async Task InsertBill(BillModel bill)
         {
             await _sql.SaveData("spOrder_UpdateBillPaid", new { Id = bill.OrderId });
@@ -24,6 +26,7 @@ namespace RMDataLibrary.DataAccess
         }
 
 
+        // Get info of all paid bills from the database
         public async Task<List<BillModel>> GetAllPaidBills()
         {
             var results = await _sql.LoadData<BillModel, dynamic>("spBill_GetAllPaid", new { });

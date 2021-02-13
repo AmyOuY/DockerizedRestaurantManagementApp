@@ -25,6 +25,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Insert new person into database
         public async Task<IActionResult> InsertPerson(PersonDisplayModel person)
         {
             if (ModelState.IsValid)
@@ -46,6 +47,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View info of all persons in the database
         public async Task<IActionResult> ViewAllPersons()
         {
             var displayPersons = new List<PersonDisplayModel>();
@@ -67,6 +69,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Edit info of person with Id = id
         public async Task<IActionResult> EditPerson(int id)
         {
             PersonModel foundPerson = await _data.GetPerson(id);
@@ -85,6 +88,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Update person info 
         public async Task<IActionResult> UpdatePerson(PersonDisplayModel person)
         {
             if (ModelState.IsValid)
@@ -107,6 +111,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete person with Id = id
         public async Task<IActionResult> DeletePerson(int id)
         {
             await _data.DeletePerson(id);

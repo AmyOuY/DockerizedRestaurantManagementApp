@@ -27,6 +27,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Insert new Food Type into database
         public async Task<IActionResult> InsertFoodType(FoodTypeDisplayModel type)
         {
             if (ModelState.IsValid)
@@ -44,6 +45,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View all Food Types
         public async Task<IActionResult> ViewAllFoodTypes()
         {
             List<FoodTypeModel> allFoodTypes = await _data.GetAllFoodTypes();
@@ -61,6 +63,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete Food Type with Id = id
         public async Task<IActionResult> DeleteFoodType(int id)
         {
             await _data.DeleteFoodType(id);
@@ -69,6 +72,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Get Food Type Id by Food Type Name = type
         private async Task<int> GetTypeIdByTypeName(string type)
         {
             var result = await _data.GetTypeIdByTypeName(type);
@@ -77,6 +81,16 @@ namespace RMUI.Controllers
         }
 
 
+        // Get Food Type Name by Food Type Id = id 
+        private async Task<string> GetTypeNameByTypeId(int id)
+        {
+            var result = await _data.GetTypeNameByTypeId(id);
+
+            return result;
+        }
+
+
+        // Insert new Food into database
         public async Task<IActionResult> InsertFood(FoodDisplayModel food)
         {
             if (ModelState.IsValid)
@@ -102,14 +116,7 @@ namespace RMUI.Controllers
         }
 
 
-        private async Task<string> GetTypeNameByTypeId(int id)
-        {
-            var result = await _data.GetTypeNameByTypeId(id);
-
-            return result;
-        }
-
-
+        // View info of all Foods
         public async Task<IActionResult> ViewAllFoods()
         {
             List<FoodModel> allFoods = await _data.GetAllFoods();
@@ -131,6 +138,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Edit Food with Id = id
         public async Task<IActionResult> EditFood(int id)
         {
             FoodModel foundFood = await _data.GetFoodById(id);
@@ -147,6 +155,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Update Food info 
         public async Task<IActionResult> UpdateFood(FoodDisplayModel food)
         {
             int typeId = await GetTypeIdByTypeName(food.FoodType);
@@ -169,6 +178,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete Food with Id = id
         public async Task<IActionResult> DeleteFood(int id)
         {
             await _data.DeleteFood(id);

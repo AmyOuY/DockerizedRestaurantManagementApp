@@ -35,6 +35,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Get all Dining Tables and populate as dropdown list items
         public async Task<List<SelectListItem>> GetAllDiningTables()
         {
             var allDiningTables = await _diningTable.GetAllDiningTables();
@@ -52,6 +53,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Get all Attendants and populate as dropdown list items
         public async Task<List<SelectListItem>> GetAllAttendants()
         {
             var allPersons = await _person.GetAllPersons();
@@ -69,6 +71,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Get all Food Types and populate as dropdown list items
         public async Task<List<SelectListItem>> GetAllFoodTypes()
         {
             var allFoodTypes = await _food.GetAllFoodTypes();
@@ -86,6 +89,8 @@ namespace RMUI.Controllers
         }
 
 
+        // Get all foods with FoodType Id = typeId and populate as dropdown list items
+        // return as JsonResult for use in JQuery function call
         public async Task<JsonResult> GetFoodsByTypeId(int typeId)
         {
             var foods = await _food.GetFoodsByTypeId(typeId);
@@ -103,6 +108,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Get Food object with Id = id and return as JsonResult for use in JQuery function call
         public async Task<JsonResult> GetFoodById(int id)
         {
             var food = await _food.GetFoodById(id);
@@ -111,6 +117,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Populate the table number and attendant name dropdown lists and foodType cascading dropdown list
         public async Task<IActionResult> CreateOrder()
         {
             var tables = await GetAllDiningTables();
@@ -126,6 +133,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Post a food order detail for inserting into databse and repopulate dropdown lists
         [HttpPost]
         public async Task<IActionResult> CreateOrder(OrderDetailFillInModel orderDetail)
         {
@@ -141,12 +149,14 @@ namespace RMUI.Controllers
                 await _order.InsertOrderDetail(detail);
                 
             }
+
             await CreateOrder();
 
             return View();
         }
 
 
+        // View the list of order details for dining table with TableNumber = tableNumber
         public async Task<IActionResult> ViewOrderDetailsByTableNumber(int tableNumber)
         {
             if (await _diningTable.IsValidTableNumber(tableNumber) == false)
@@ -186,12 +196,14 @@ namespace RMUI.Controllers
         }
 
 
+        // Search for order details by typing in table number in view
         public IActionResult SearchOrderByTable()
         {
             return View();
         }
 
 
+        // Insert into database order summary of dining table with TableNumber = tableNumber
         public async Task<IActionResult> InsertOrderByTable(int tableNumber)
         {
             if (await _diningTable.IsValidTableNumber(tableNumber) == false)
@@ -204,6 +216,8 @@ namespace RMUI.Controllers
 
             foreach (var order in allOrders)
             {
+                // If the dining table is being used and current bill not paid
+                // delete its current order summary and insert the updated one
                 if (order.DiningTableId == table.Id)
                 {
                     await _order.DeleteOrder(order.Id);
@@ -216,6 +230,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View the order summary for all unpaid dining tables as a list
         public async Task<IActionResult> ViewAllUnpaidOrders()
         {
             List<OrderModel> allOrders = await _order.GetAllUnpaidOrders();
@@ -242,6 +257,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View a specific ordered food detail with Id = id
         public async Task<IActionResult> ViewOrderDetail(int id)
         {
             OrderDetailModel detail = await _order.GetOrderDetailById(id);
@@ -263,6 +279,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Edit a specific ordered food detail with Id = id
         public async Task<IActionResult> EditOrderDetail(int id)
         {
             OrderDetailModel detail = await _order.GetOrderDetailById(id);
@@ -285,6 +302,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Update the specific ordered food detail in database
         public async Task<IActionResult> UpdateOrderDetail(OrderDetailDisplayModel displayDetail)
         {
             DiningTableModel table = await _diningTable.GetDiningTableByTableNumber(displayDetail.TableNumber);
@@ -307,6 +325,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Edit a specific order summary with Id = id
         public async Task<IActionResult> EditOrder(int id)
         {
             OrderModel order = await _order.GetOrderById(id);
@@ -328,6 +347,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Update the specific order summary in database
         public async Task<IActionResult> UpdateOrder(OrderDisplayModel displayOrder)
         {
             DiningTableModel table = await _diningTable.GetDiningTableByTableNumber(displayOrder.TableNumber);
@@ -351,6 +371,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View the list of ordered food details for order summary with summary Id = id
         public async Task<IActionResult> ViewOrderDetailsByOrderId(int id)
         {
             OrderModel order = await _order.GetOrderById(id);
@@ -386,6 +407,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete a specific ordered food detail with Id = id
         public async Task<IActionResult> DeleteOrderDetail(int id)
         {
             OrderDetailModel orderDetail = await _order.GetOrderDetailById(id);
@@ -397,6 +419,7 @@ namespace RMUI.Controllers
         }
 
 
+        // Delete a specific order summary with Id = id
         public async Task<IActionResult> DeleteOrder(int id)
         {
             await _order.DeleteOrder(id);

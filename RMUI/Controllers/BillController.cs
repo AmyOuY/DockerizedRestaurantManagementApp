@@ -33,6 +33,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View bill details for a specific dining table with TableNumber = tableNumber
         public async Task<IActionResult> ViewBillByTable(int tableNumber)
         {
             if (await _table.IsValidTableNumber(tableNumber) == false)
@@ -88,12 +89,15 @@ namespace RMUI.Controllers
         }
 
 
+        // Search for bill details by typing in table number in view
         public IActionResult SearchBill()
         {
             return View();
         }
 
 
+        // Press the Pay Bill button will insert bill info into database and update 
+        // corresponding BillPaid info in the Order table and OrderDetail table
         public async Task<IActionResult> PayBill(BillDisplayModel displayBill)
         {
             DiningTableModel table = await _table.GetDiningTableByTableNumber(displayBill.TableNumber);
@@ -116,6 +120,7 @@ namespace RMUI.Controllers
         }
 
 
+        // View info for all paid bills
         public async Task<IActionResult> ViewAllPaidBills()
         {
             List<BillModel> bills = await _bill.GetAllPaidBills();
