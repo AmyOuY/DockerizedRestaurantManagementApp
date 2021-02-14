@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RMDataLibrary.DataAccess;
 using RMDataLibrary.Models;
@@ -9,6 +10,7 @@ using RMUI.Models;
 
 namespace RMUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PersonController : Controller
     {
         private readonly IPersonData _data;

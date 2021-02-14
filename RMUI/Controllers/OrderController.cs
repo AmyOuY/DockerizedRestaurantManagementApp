@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using RMUI.Models;
 
 namespace RMUI.Controllers
 {
+    [Authorize(Roles = "Manager, Attendant")]
     public class OrderController : Controller
     {
         private readonly IOrderData _order;

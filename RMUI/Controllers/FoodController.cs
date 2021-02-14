@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RMDataLibrary.DataAccess;
@@ -11,6 +12,7 @@ using RMUI.Models;
 
 namespace RMUI.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class FoodController : Controller
     {
         private readonly IFoodData _data;

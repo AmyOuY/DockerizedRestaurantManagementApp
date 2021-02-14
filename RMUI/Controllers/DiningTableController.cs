@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RMDataLibrary.DataAccess;
 using RMDataLibrary.Models;
@@ -10,6 +11,7 @@ using RMUI.Models;
 
 namespace RMUI.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class DiningTableController : Controller
     {
         private readonly IDiningTableData _data;
