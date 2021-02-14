@@ -395,7 +395,7 @@ namespace RMUI.Controllers
 
                     displayDetails.Add(new OrderDetailDisplayModel { 
                         Id = detail.Id,
-                        TableNumber = table.Id,
+                        TableNumber = table.TableNumber,
                         Attendant = attendant.FirstName + " " + attendant.LastName,
                         FoodName = food.FoodName,
                         Price = food.Price,

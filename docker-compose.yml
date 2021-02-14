@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  efcore-mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Pwd12345!
+    ports:
+      - "1433:1433"
+
+  dapper-mssql:
+    image: rmdataimg
+    ports:
+      - "1432:1433"
+
+  rmui:
+    image: ${DOCKER_REGISTRY-}rmui
+    build:
+      context: .
+      dockerfile: RMUI/Dockerfile
+    ports:
+      - "8080:80"
+      - "8081:443"
+    environment:
+      DBServer: efcore-mssql
+    depends_on:
+      - efcore-mssql
+      - dapper-mssql
