@@ -2,8 +2,12 @@
 <ul>
   <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and authorization.</li>
   <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor Page and Controllers implemented with Dependency Injection and Async/Await.</li>
-  <li>Back-end data was managed by Microsoft SQL Server that used Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for the  Authentication/Authorization data and the rest of the app data respectively.</li>
+  <li>Back-end data was managed by Microsoft SQL Server that used Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for the Authentication/Authorization data and the rest of the app data respectively.</li>
 </ul>
+
+<hr />
+<h3>docker-compose creates 3 containers based on 3 images. The RMUI container is created by the rmui image, which is built by Dockerfile inside the RMUI folder. The dapper-mssql container is created by the rmdataimg image, which is built in advance by dockerfile inside the RMDataBackup folder. The efcore-mssql container is created by the mssql server that pulled from docker hub.</h3> 
+<img src="./Images/powerShell_2.png">
 
 <hr />
 <h3> Home Page with controllers shown as dropdown lists in the menu bar </h3>
@@ -42,7 +46,7 @@
 <img src="./Images/addFoodType.png">
 
 <hr />
-<h3>Food Controller -- viewing all food types. The Create New Food Type link redirects to inserting food type view and the Delete link directly deletes the food type.</h3>
+<h3>Food Controller -- viewing all food types. The Create New Food Type link redirects to inserting new food type view and the Delete link directly deletes the food type.</h3>
 <img src="./Images/foodTypeList.png">
 
 <hr />
