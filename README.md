@@ -27,7 +27,7 @@
 
 <hr />
 <h3>DiningTable Controller -- inserting new dining table into database, with link redirecting to viewing all dining tables view.</h3>
-<img src="./Images/addDiningTable.png">
+<img src="./Images/addDinigTable.png">
 
 <hr />
 <h3>DiningTable Controller -- editing dining table, with link redirecting to viewing all dining tables view.</h3>
@@ -66,12 +66,56 @@
 <img src="./Images/viewOrderDetailsByTableNumber.png">
 
 <hr />
-<h3 style="color:blue">Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order List link allows redirecting to the order details of the specific dining table.</h3>
+<h3>Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order List link allows redirecting to the order details of the specific dining table.</h3>
 <img src="./Images/editFood.png">
 
 <hr />
-<h3 style="color:blue">Order Controller -- editing one ordered food of a specific dining table</h3>
+<h3>Order Controller -- editing one ordered food of a specific dining table</h3>
 <img src="./Images/editOrderDetail.png">
 
+<hr />
+<h3>Order Controller -- searching for order details of the provided table number</h3>
+<img src="./Images/searchOrder.png">
 
+<hr />
+<h3>An error message will show up if currently there is no active order for the searched table</h3>
+<img src="./Images/noOrderError.png">
 
+<hr />
+<h3>Order Controller -- viewing the order summary of all active orders. The Create New Order link, Edit link, Details link and Delete link allows inserting new order, editing order summary, viewing ordered food details and deleting order summary respectively.
+</h3>
+<img src="./Images/viewAllUnpaidOrder.png">
+
+<hr />
+<h3>Order Controller -- editing order summary</h3>
+<img src="./Images/editOrder.png">
+
+<hr />
+<h3>Order Controller -- viewing ordered food details of a specific table. The Create New Order link, Edit link, Details link and Delete link allows inserting new order, editing ordered food, viewing ordered food and deleting ordered food respectively.
+</h3>
+<img src="./Images/viewOrderDetailsByTableId.png">
+
+<hr />
+<h3>Bill Controller -- searching the bill of a specific table. An error message will show up if the searched table doesn't exist or currently there is no active order for the searched table.
+</h3>
+<img src="./Images/searchBill.png">
+
+<hr />
+<h3>Bill Controller -- viewing the bill details returned by bill search. If there is no question about the bill we can press the Pay Bill button to request bill payment. The Back To Unpaid Order List link allows redirecting to the summary of all active orders view.</h3>
+<img src="./Images/billDetail.png">
+
+<hr />
+<h3>Repository Controller -- viewing the order summary of all paid and unpaid orders.</h3>
+<img src="./Images/viewAllOrders_0.png">
+
+<hr />
+<h3>Repository Controller -- viewing the ordered food details of all paid and unpaid orders.</h3>
+<img src="./Images/viewAllOrderDetails_0.png">
+
+<hr />
+<h3>Repository Controller -- The Order Id for the ordered food of a specific dining table is 0 before bill payment.</h3>
+<img src="./Images/viewAllOrderDetails_1.png">
+
+<hr />
+<h3>The dining table's Order Id will be assigned to each of its ordered food after bill payment.</h3>
+<img src="./Images/viewAllOrderDetails_2.png">
