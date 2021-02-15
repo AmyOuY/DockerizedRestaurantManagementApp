@@ -23,14 +23,14 @@
 
 <hr />
 <h3>Person Controller -- viewing all employees. The Create New Employee link and the Edit link allows redirecting to the inserting new employee view and the editing employee view respectively. The Delete link directly deletes the employee.</h3>
-<img src="./Images/viewOrderDetail.png">
+<img src="./Images/employeeList.png">
 
 <hr />
-<h3>DiningTable Controller -- inserting new dining table into database, with link redirecting to viewing all dining tables view.</h3>
+<h3>DiningTable Controller -- inserting new dining table into database</h3>
 <img src="./Images/addDinigTable.png">
 
 <hr />
-<h3>DiningTable Controller -- editing dining table, with link redirecting to viewing all dining tables view.</h3>
+<h3>DiningTable Controller -- editing dining table</h3>
 <img src="./Images/editDiningTable.png">
 
 <hr />
@@ -38,15 +38,15 @@
 <img src="./Images/diningTableList.png">
 
 <hr />
-<h3>Food Controller -- inserting new food type into database, with link redirecting to viewing all food types view.</h3>
+<h3>Food Controller -- inserting new food type into database</h3>
 <img src="./Images/addFoodType.png">
 
 <hr />
-<h3>Food Controller -- viewing all food types. The Create New link redirects to inserting food type view and the Delete link directly deletes the food type.</h3>
+<h3>Food Controller -- viewing all food types. The Create New Food Type link redirects to inserting food type view and the Delete link directly deletes the food type.</h3>
 <img src="./Images/foodTypeList.png">
 
 <hr />
-<h3>Food Controller -- inserting new food into database, with link redirecting to viewing all foods view.</h3>
+<h3>Food Controller -- inserting new food into database</h3>
 <img src="./Images/addFood.png">
 
 <hr />
@@ -54,7 +54,7 @@
 <img src="./Images/foodList.png">
 
 <hr />
-<h3>Food Controller -- editing food, with link redirecting to viewing all foods view.</h3>
+<h3>Food Controller -- editing food</h3>
 <img src="./Images/editFood.png">
 
 <hr />
@@ -66,8 +66,8 @@
 <img src="./Images/viewOrderDetailsByTableNumber.png">
 
 <hr />
-<h3>Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order List link allows redirecting to the order details of the specific dining table.</h3>
-<img src="./Images/editFood.png">
+<h3>Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order by Table link allows redirecting to the order details of the specific dining table.</h3>
+<img src="./Images/viewOrderDetail.png">
 
 <hr />
 <h3>Order Controller -- editing one ordered food of a specific dining table</h3>
@@ -113,9 +113,9 @@
 <img src="./Images/viewAllOrderDetails_0.png">
 
 <hr />
-<h3>Repository Controller -- The Order Id for the ordered food of a specific dining table is 0 before bill payment.</h3>
+<h3>Repository Controller -- The Order ID for the ordered food of a specific dining table is 0 before bill payment.</h3>
 <img src="./Images/viewAllOrderDetails_1.png">
 
 <hr />
-<h3>The dining table's Order Id will be assigned to each of its ordered food after bill payment.</h3>
+<h3>The dining table's Order ID will be assigned to each of its ordered food after bill payment.</h3>
 <img src="./Images/viewAllOrderDetails_2.png">
