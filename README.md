@@ -18,16 +18,12 @@
 <img src="./Images/addEmployee.png">
 
 <hr />
-<h3>Person Controller -- inserting new employee into database</h3>
-<img src="./Images/addEmployee.png">
-
-<hr />
 <h3>Person Controller -- editing employee info</h3>
 <img src="./Images/editEmployee.png">
 
 <hr />
 <h3>Person Controller -- viewing all employees. The Create New Employee link and the Edit link allows redirecting to the inserting new employee view and the editing employee view respectively. The Delete link directly deletes the employee.</h3>
-<img src="./Images/employeeList.png">
+<img src="./Images/viewOrderDetail.png">
 
 <hr />
 <h3>DiningTable Controller -- inserting new dining table into database, with link redirecting to viewing all dining tables view.</h3>
@@ -70,10 +66,12 @@
 <img src="./Images/viewOrderDetailsByTableNumber.png">
 
 <hr />
-<h3>Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order List link allows redirecting to the order details of the specific dining table.</h3>
+<h3 style="color:blue">Order Controller -- viewing one ordered food of a specific dining table. The Edit link allows editing this ordered food and the Back To Order List link allows redirecting to the order details of the specific dining table.</h3>
 <img src="./Images/editFood.png">
 
-
+<hr />
+<h3 style="color:blue">Order Controller -- editing one ordered food of a specific dining table</h3>
+<img src="./Images/editOrderDetail.png">
 
 
 
