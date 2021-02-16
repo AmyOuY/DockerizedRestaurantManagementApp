@@ -1,12 +1,12 @@
 # Docker Containerized Restaurant Management App (C# .NETCore)
 <ul>
-  <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and authorization.</li>
-  <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor Page and Controllers implemented with Dependency Injection and Async/Await.</li>
+  <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and role based authorization.</li>
+  <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor and Controllers implemented with Dependency Injection and Async/Await.</li>
   <li>Back-end data was managed by Microsoft SQL Server that used Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for the Authentication/Authorization data and the rest of the app data respectively.</li>
 </ul>
 
 <hr />
-<h3>docker-compose creates 3 containers based on 3 images. The RMUI container is created by the rmui image, which is built by Dockerfile inside the RMUI folder. The dapper-mssql container is created by the rmdataimg image, which is built in advance by dockerfile inside the RMDataBackup folder. The efcore-mssql container is created by the mssql server that pulled from docker hub.</h3> 
+<h3>docker-compose defines 3 services: rmui, efcore-mssql and dapper-mssql. rmui packs an ASP.NET Core Web Application into RMUI container based on the image built by Dockerfile inside the RMUI folder. The efcore-mssql container is created by the mssql server that pulled from docker hub, which uses Entity Framework Core as ORM to manage the authentication/authorization data. The dapper-mssql container uses Dapper as ORM for managing the rest of the app data. It is created by the image rmdataimg, which is built in advance by dockerfile inside the RMDataBackup folder.</h3> 
 <img src="./Images/powerShell_2.png">
 
 <hr />
@@ -14,7 +14,7 @@
 <img src="./Images/home.png">
 
 <hr />
-<h3>The app supports Authentication and Authorization, which requires user login to use the app. The code for user role assignment can be found in Home Controller.</h3>
+<h3>The app supports Authentication and Role Based Authorization, which requires user login to use the app. The code for user role assignment can be found in Home Controller.</h3>
 <img src="./Images/login.png">
 
 <hr />
