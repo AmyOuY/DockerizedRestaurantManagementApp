@@ -1,5 +1,5 @@
 # Docker Containerized Restaurant Management App (C# .NETCore)
-<ul h3>
+<ul font size="+1">
   <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and role based authorization.</li>
   <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor and Controllers implemented with Dependency Injection and Async/Await.</li>
   <li>Back-end data was managed by Microsoft SQL Server that used Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for the Authentication/Authorization data and the rest of the app data respectively.</li>
