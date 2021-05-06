@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RMDataLibrary.DataAccess;
+using System.Runtime;
 
 namespace RMUI
 {
@@ -45,6 +46,12 @@ namespace RMUI
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Redis cache
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = Configuration.GetConnectionString("Redis");
+                options.InstanceName = "Restaurant_";
+            });
 
             // Personal Services
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();

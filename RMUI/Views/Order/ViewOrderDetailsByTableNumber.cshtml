@@ -37,36 +37,37 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TableNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Attendant)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditOrderDetail", new { id=item.Id }) |
-                @Html.ActionLink("Details", "ViewOrderDetail", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "DeleteOrderDetail", new { id=item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TableNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoodName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditOrderDetail", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "ViewOrderDetail", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteOrderDetail", new { id = item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -88,3 +89,7 @@
         <div class="col-4"></div>
     </div>
 </div>
+
+
+<div class="row mt-lg-5"></div>
+<div class="h4 text-center @TempData["isCacheData"]">@TempData["loadLocation"]</div>

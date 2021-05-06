@@ -47,7 +47,7 @@ namespace RMUI.Controllers
                 }
             }
 
-            var user1 = await _userManager.FindByEmailAsync("yimiao@iamyimiao.com");
+            var user1 = await _userManager.FindByEmailAsync("yimiao@yimiao.net");
             if (user1 != null)
             {
                 await _userManager.AddToRoleAsync(user1, "Admin");
@@ -55,7 +55,7 @@ namespace RMUI.Controllers
                 await _userManager.AddToRoleAsync(user1, "Chef");
             }
 
-            var user2 = await _userManager.FindByEmailAsync("amy@iamamy.com");
+            var user2 = await _userManager.FindByEmailAsync("amy@amy.net");
             if (user2 != null)
             {
                 await _userManager.AddToRoleAsync(user2, "Manager");

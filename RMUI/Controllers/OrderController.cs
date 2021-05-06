@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Caching.Distributed;
 using RMDataLibrary.DataAccess;
+using RMDataLibrary.Extensions;
 using RMDataLibrary.Models;
 using RMUI.Models;
 
@@ -21,13 +24,15 @@ namespace RMUI.Controllers
         private readonly IFoodData _food;
         private readonly IDiningTableData _diningTable;
         private readonly IPersonData _person;
+        private readonly IDistributedCache _cache;
 
-        public OrderController(IOrderData order, IFoodData food, IDiningTableData diningTable, IPersonData person)
+        public OrderController(IOrderData order, IFoodData food, IDiningTableData diningTable, IPersonData person, IDistributedCache cache)
         {
             _order = order;
             _food = food;
             _diningTable = diningTable;
             _person = person;
+            _cache = cache;
         }
 
 
@@ -168,33 +173,56 @@ namespace RMUI.Controllers
 
             DiningTableModel table = await _diningTable.GetDiningTableByTableNumber(tableNumber);
 
-            List<OrderDetailModel> orderDetails = await _order.GetOrderDetailsByDiningTableIdUnpaid(table.Id);
+            string loadLocation;
+            string isCacheData;
 
-            if (orderDetails.Count == 0)
+            // Retrieve data from Redis Cache first
+            List<OrderDetailModel> orderDetails = await _cache.GetEntryAsync<List<OrderDetailModel>>(table.Id.ToString());
+
+            // If data not in Redis Cache, retrieve it form sql database and then cache data in Redis
+            if (orderDetails is null)
             {
-                return RedirectToAction("Alert", "Home", new { message = $"Error! There is no currently active order for Table {tableNumber}!" });
+                orderDetails = await _order.GetOrderDetailsByDiningTableIdUnpaid(table.Id);
+
+                if (orderDetails.Count == 0)
+                {
+                    return RedirectToAction("Alert", "Home", new { message = $"Error! There is no currently active order for Table {tableNumber}!" });
+                }
+
+                loadLocation = "Data loaded from SQL database at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-success";
+
+                await _cache.SetEntryAsync(table.Id.ToString(), orderDetails);
             }
             else
             {
-                List<OrderDetailDisplayModel> displayDetails = new List<OrderDetailDisplayModel>();
-                var attendant = await _person.GetPerson(orderDetails[0].AttendantId);
-
-                foreach (var detail in orderDetails)
-                {
-                    FoodModel food = await _food.GetFoodById(detail.FoodId);
-
-                    displayDetails.Add(new OrderDetailDisplayModel { 
-                        Id = detail.Id,
-                        TableNumber = tableNumber,
-                        Attendant = attendant.FirstName + " " + attendant.LastName,
-                        FoodName = food.FoodName,
-                        Price = food.Price,
-                        Quantity = detail.Quantity,
-                        OrderDate = detail.OrderDate        
-                    });
-                }
-                return View(displayDetails);
+                loadLocation = "Data loaded from Redis Cache at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-danger";
             }
+
+            List<OrderDetailDisplayModel> displayDetails = new List<OrderDetailDisplayModel>();
+            var attendant = await _person.GetPerson(orderDetails[0].AttendantId);
+
+            foreach (var detail in orderDetails)
+            {
+                FoodModel food = await _food.GetFoodById(detail.FoodId);
+
+                displayDetails.Add(new OrderDetailDisplayModel
+                {
+                    Id = detail.Id,
+                    TableNumber = tableNumber,
+                    Attendant = attendant.FirstName + " " + attendant.LastName,
+                    FoodName = food.FoodName,
+                    Price = food.Price,
+                    Quantity = detail.Quantity,
+                    OrderDate = detail.OrderDate
+                });
+            }
+
+            TempData["loadLocation"] = loadLocation;
+            TempData["isCacheData"] = isCacheData;
+
+            return View(displayDetails);           
         }
 
 
@@ -262,7 +290,28 @@ namespace RMUI.Controllers
         // View a specific ordered food detail with Id = id
         public async Task<IActionResult> ViewOrderDetail(int id)
         {
-            OrderDetailModel detail = await _order.GetOrderDetailById(id);
+            string loadLocation = null;
+            string isCacheData = null;
+
+            // Retrieve data from Redis Cache first
+            OrderDetailModel detail = await _cache.GetEntryAsync<OrderDetailModel>(id.ToString());
+
+            // If data not in Redis Cache, retrieve it form sql database and then cache data in Redis
+            if (detail is null)
+            {
+                detail = await _order.GetOrderDetailById(id);
+
+                loadLocation = "Data loaded from SQL database at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-success";
+
+                await _cache.SetEntryAsync(id.ToString(), detail);
+            }
+            else
+            {
+                loadLocation = "Data loaded from Redis Cache at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-danger";
+            }
+            
             DiningTableModel table = await _diningTable.GetDiningTableById(detail.DiningTableId);
             PersonModel attendant = await _person.GetPerson(detail.AttendantId);
             FoodModel food = await _food.GetFoodById(detail.FoodId);
@@ -276,6 +325,9 @@ namespace RMUI.Controllers
                 Quantity = detail.Quantity,
                 OrderDate = detail.OrderDate
             };
+
+            TempData["loadLocation"] = loadLocation;
+            TempData["isCacheData"] = isCacheData;
 
             return View(displayDetail);
         }
@@ -376,36 +428,64 @@ namespace RMUI.Controllers
         // View the list of ordered food details for order summary with summary Id = id
         public async Task<IActionResult> ViewOrderDetailsByOrderId(int id)
         {
-            OrderModel order = await _order.GetOrderById(id);
-            DiningTableModel table = await _diningTable.GetDiningTableById(order.DiningTableId);
-            List<OrderDetailModel> orderDetails = await _order.GetOrderDetailsByDiningTableIdUnpaid(table.Id);
-            
-            if (orderDetails.Count == 0)
+            // Retrieve data from Redis Cache first
+            OrderModel order = await _cache.GetEntryAsync<OrderModel>(id.ToString());
+
+            // If data not in Redis Cache, retrieve it form sql database and then cache data in Redis
+            if (order is null)
             {
-                return RedirectToAction("Alert", "Home", new { message = $"Error! There is no currently active order for Table {table.TableNumber}!" });
+                order = await _order.GetOrderById(id);
+
+                await _cache.SetEntryAsync(id.ToString(), order);
+            }
+            
+            DiningTableModel table = await _diningTable.GetDiningTableById(order.DiningTableId);
+            
+            string loadLocation;
+            string isCacheData;
+
+            // Retrieve data from Redis Cache first
+            List<OrderDetailModel> orderDetails = await _cache.GetEntryAsync<List<OrderDetailModel>>(table.Id.ToString());
+
+            // If data not in Redis Cache, retrieve it form sql database and then cache data in Redis
+            if (orderDetails is null)
+            {
+                orderDetails = await _order.GetOrderDetailsByDiningTableIdUnpaid(table.Id);
+
+                loadLocation = "Data loaded from SQL database at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-success";
+
+                await _cache.SetEntryAsync(table.Id.ToString(), orderDetails);
             }
             else
             {
-                List<OrderDetailDisplayModel> displayDetails = new List<OrderDetailDisplayModel>();
-                PersonModel attendant = await _person.GetPerson(orderDetails[0].AttendantId);
-
-                foreach (var detail in orderDetails)
-                {
-                    FoodModel food = await _food.GetFoodById(detail.FoodId);
-
-                    displayDetails.Add(new OrderDetailDisplayModel { 
-                        Id = detail.Id,
-                        TableNumber = table.TableNumber,
-                        Attendant = attendant.FirstName + " " + attendant.LastName,
-                        FoodName = food.FoodName,
-                        Price = food.Price,
-                        Quantity = detail.Quantity,
-                        OrderDate = detail.OrderDate
-                    });
-                }
-
-                return View(displayDetails);
+                loadLocation = "Data loaded from Redis Cache at " + DateTime.Now.ToString("yyyyMMdd_hhmm");
+                isCacheData = "text-danger";
             }
+   
+            List<OrderDetailDisplayModel> displayDetails = new List<OrderDetailDisplayModel>();
+            PersonModel attendant = await _person.GetPerson(orderDetails[0].AttendantId);
+
+            foreach (var detail in orderDetails)
+            {
+                FoodModel food = await _food.GetFoodById(detail.FoodId);
+
+                displayDetails.Add(new OrderDetailDisplayModel { 
+                    Id = detail.Id,
+                    TableNumber = table.TableNumber,
+                    Attendant = attendant.FirstName + " " + attendant.LastName,
+                    FoodName = food.FoodName,
+                    Price = food.Price,
+                    Quantity = detail.Quantity,
+                    OrderDate = detail.OrderDate
+                });
+            }
+
+            TempData["loadLocation"] = loadLocation;
+            TempData["isCacheData"] = isCacheData;
+
+            return View(displayDetails);
+            
         }
 
 
@@ -428,5 +508,6 @@ namespace RMUI.Controllers
 
             return RedirectToAction("ViewAllUnpaidOrders");
         }
+
     }
 }

@@ -6,13 +6,21 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Pwd12345!
+    container_name: ef-sql
     ports:
       - "1433:1433"
 
   dapper-mssql:
     image: rmdataimg
+    container_name: dapper-sql
     ports:
       - "1432:1433"
+  
+  redis-cache:
+    image: redis
+    container_name: my-redis
+    ports:
+      - "6379:6379"
 
   rmui:
     image: ${DOCKER_REGISTRY-}rmui
@@ -27,3 +35,6 @@ services:
     depends_on:
       - efcore-mssql
       - dapper-mssql
+      - redis-cache
+    links:
+      - "redis-cache"

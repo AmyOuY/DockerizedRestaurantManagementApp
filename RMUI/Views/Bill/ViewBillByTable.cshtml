@@ -65,23 +65,23 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.OrderDetails)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model.OrderDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoodName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -93,3 +93,5 @@
 <div class="mt-lg-5">
     <a asp-action="ViewAllUnpaidOrders" asp-controller="Order">Back to Unpaid Order List</a>
 </div>
+
+

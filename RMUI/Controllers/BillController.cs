@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using RMDataLibrary.DataAccess;
+using RMDataLibrary.Extensions;
 using RMDataLibrary.Models;
 using RMUI.Models;
 
@@ -18,14 +20,16 @@ namespace RMUI.Controllers
         private readonly IDiningTableData _table;
         private readonly IPersonData _person;
         private readonly IFoodData _food;
+        private readonly IDistributedCache _cache;
 
-        public BillController(IBillData bill, IOrderData order, IDiningTableData table, IPersonData person, IFoodData food)
+        public BillController(IBillData bill, IOrderData order, IDiningTableData table, IPersonData person, IFoodData food, IDistributedCache cache)
         {
             _bill = bill;
             _order = order;
             _table = table;
             _person = person;
             _food = food;
+            _cache = cache;
         }
 
 
@@ -52,8 +56,9 @@ namespace RMUI.Controllers
             }
 
             PersonModel attendant = await _person.GetPerson(order.AttendantId);
-            
-            BillDisplayModel bill = new BillDisplayModel { 
+
+            BillDisplayModel bill = new BillDisplayModel
+            {
                 OrderId = order.Id,
                 TableNumber = tableNumber,
                 Attendant = attendant.FirstName + " " + attendant.LastName,
@@ -75,7 +80,8 @@ namespace RMUI.Controllers
                 {
                     FoodModel food = await _food.GetFoodById(detail.FoodId);
 
-                    bill.OrderDetails.Add(new OrderDetailDisplayModel { 
+                    bill.OrderDetails.Add(new OrderDetailDisplayModel
+                    {
                         Id = detail.Id,
                         TableNumber = tableNumber,
                         Attendant = attendant.FirstName + " " + attendant.LastName,
