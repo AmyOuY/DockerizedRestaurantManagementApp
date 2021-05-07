@@ -2,12 +2,12 @@
 <ul>
   <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and role based authorization.</li>
   <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor and Controllers implemented with Dependency Injection and Async/Await.</li>
-  <li>Back-end data was managed by Microsoft SQL Server using Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for handling Authentication/Authorization data and the rest of the app data respectively.</li>
+  <li>Back-end data was cached using Redis and managed by Microsoft SQL Server using Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for handling Authentication/Authorization data and the rest of the app data respectively.</li>
 </ul>
 
 <hr />
-<h3>docker-compose defines 3 services: rmui, efcore-mssql and dapper-mssql. rmui packs an ASP.NET Core Web Application into RMUI container based on the image built by Dockerfile inside the RMUI folder. The efcore-mssql container is created by the mssql server that pulled from docker hub, which uses Entity Framework Core as ORM to manage the authentication/authorization data. The dapper-mssql container uses Dapper as ORM for managing the rest of the app data. It is created by the image rmdataimg, which is built in advance by dockerfile inside the RMDataBackup folder.</h3> 
-<img src="./Images/powerShell_2.png">
+<h3>docker-compose defines 4 services: rmui, efcore-mssql, dapper-mssql and redis. rmui packs an ASP.NET Core Web Application into RMUI container based on the image built by Dockerfile inside the RMUI folder. The efcore-mssql container is created by the mssql server pulled from docker hub, which uses Entity Framework Core as ORM to manage the authentication/authorization data. The dapper-mssql container uses Dapper as ORM for managing the rest of the app data. It is created by the image rmdataimg, which is built in advance by dockerfile inside the RMDataBackup folder. The redis container is created by Redis pulled from docker hub.</h3> 
+<img src="./Images/powershell.png">
 
 <hr />
 <h3> Home Page with controllers shown as dropdown lists in the menu bar </h3>
@@ -123,3 +123,15 @@
 <hr />
 <h3>The dining table's Order ID will be assigned to each of its ordered food after bill payment.</h3>
 <img src="./Images/viewAllOrderDetails_2.png">
+
+<hr />
+<h3>Data retrieved from SQL database and cached only when it is not in Redis (First retrieval of data from SQL database and caching in Redis at 48th minute).</h3>
+<img src="./Images/orderByTable_48.png">
+
+<hr />
+<h3>Data primarily retrieved from Redis if it is cached there (Data is cached in Redis at 49th minute).</h3>
+<img src="./Images/orderByTable_49.png">
+
+<hr />
+<h3>Data retrieved from SQL database again because it is not cached in Redis (Data cached in Redis for 1 minute and expired at 50th minute).</h3>
+<img src="./Images/orderByTable_50.png">
