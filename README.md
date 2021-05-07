@@ -2,7 +2,7 @@
 <ul>
   <li>A Docker Containerized Web Application that allows users to manage employees, dining tables, foods, orders and bills in the restaurant with authentication and role based authorization.</li>
   <li>The app was built with ASP.NET Core3.1 MVC with front-end Views created by Razor and Controllers implemented with Dependency Injection and Async/Await.</li>
-  <li>Back-end data was cached using Redis and managed by Microsoft SQL Server using Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for handling Authentication/Authorization data and the rest of the app data respectively.</li>
+  <li>Back-end data was cached in Redis and managed by Microsoft SQL Server using Entity Framework Core (EF Core) and Dapper as Object Relational Mapper (ORM) for handling Authentication/Authorization data and the rest of the app data respectively.</li>
 </ul>
 
 <hr />
